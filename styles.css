@@ -1,0 +1,256 @@
+/* Charity: water Brand Colors & Fonts
+
+Primary Colors:
+- Yellow:     #FFC907
+- Blue:       #2E9DF7
+
+Secondary Colors:
+- Light Blue: #8BD1CB
+- Green:      #4FCB53
+- Orange:     #FF902A
+- Red:        #F5402C
+- Dark Green: #159A48
+- Pink:       #F16061
+
+Fonts:
+- Proxima Nova
+- Avenir
+
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    font-family: 'Proxima Nova', 'Avenir', Arial, Helvetica, sans-serif, Georgia;
+    padding-top: 120px; /* space for hero-section */
+}
+
+.game-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.score-panel {
+    display: flex;
+    justify-content: space-between;  /* Space between score and button */
+    align-items: center;
+    width: 800px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    gap: 12px; /* Add gap for spacing between elements */
+}
+
+.timer {
+    flex: 0 1 auto;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#game-container {
+    width: 800px;
+    height: 600px;
+    background-color: #e6f7ff;
+    border: 2px solid #333;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+
+#start-btn {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#start-btn:hover {
+    background-color: #45a049;
+}
+
+#restart-btn {
+    padding: 8px 16px;
+    background-color: #2E9DF7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+#restart-btn:hover {
+    background-color: #217ac0;
+}
+
+.score {
+    flex: 0 1 auto;  /* Don't grow, can shrink, auto basis */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.water-drop {
+    position: absolute;
+    width: 60px;  /* increased from 40px */
+    height: 60px; /* increased from 40px */
+    background-color: #0099ff;
+    border-radius: 50%;
+    animation: dropFall linear forwards;
+    transform-origin: center;
+    cursor: pointer;
+    padding: 15px;  /* Add padding for larger click area */
+    margin: -15px;  /* Offset padding to maintain visual size */
+    transition: transform 0.1s ease;  /* Smooth hover effect */
+}
+
+.water-drop:hover {
+    transform: scale(1.1);  /* Slight grow effect on hover */
+}
+
+.bad-drop {
+    background-color: #ff4444;
+}
+
+.game-title {
+    color: #131313;
+    font-size: 48px;
+    margin-top: 0;
+    margin-bottom: 5px;  /* reduced from 20px */
+    text-align: center;
+}
+
+.game-tagline {
+    color: #666;
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.hero-section {
+    width: 100vw;
+    max-width: 100%;
+    background: #FFC907;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 24px 8px 16px 8px;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    border-bottom: 4px solid #2E9DF7;
+}
+
+.hero-logo {
+    height: 48px;
+    margin-bottom: 10px;
+}
+
+.hero-headline {
+    font-family: 'Proxima Nova', 'Avenir', Arial, Helvetica, sans-serif, Georgia;
+    font-size: 1.5rem;
+    color: #131313;
+    margin: 0 0 6px 0;
+    text-align: center;
+    font-weight: bold;
+}
+
+.hero-description {
+    font-family: 'Proxima Nova', 'Avenir', Arial, Helvetica, sans-serif, Georgia;
+    font-size: 1rem;
+    color: #333;
+    text-align: center;
+    margin: 0 0 4px 0;
+    max-width: 400px;
+}
+
+#difficulty {
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #bbb;
+    background: #f7f7f7;
+    font-size: 16px;
+}
+
+@keyframes dropFall {
+    from {
+        transform: translateY(-20px);
+    }
+    to {
+        transform: translateY(600px);
+    }
+}
+
+@media (max-width: 850px) {
+    .game-wrapper, .score-panel, #game-container {
+        width: 95vw;
+    }
+    
+    #game-container {
+        height: 70vh;
+    }
+}
+
+@media (min-width: 600px) {
+    .hero-section {
+        flex-direction: row;
+        justify-content: center;
+        padding: 32px 0 24px 0;
+    }
+    .hero-logo {
+        height: 60px;
+        margin-bottom: 0;
+        margin-right: 24px;
+    }
+    .hero-headline {
+        font-size: 2.2rem;
+        margin-bottom: 0;
+        margin-right: 18px;
+    }
+    .hero-description {
+        font-size: 1.1rem;
+        margin-bottom: 0;
+    }
+}
+
+.footer {
+    width: 100vw;
+    background: #2E9DF7;
+    color: #fff;
+    text-align: center;
+    padding: 18px 0 12px 0;
+    font-family: 'Proxima Nova', 'Avenir', Arial, Helvetica, sans-serif, Georgia;
+    font-size: 1rem;
+    position: relative;
+    margin-top: 32px;
+}
+
+.footer-link {
+    color: #FFC907;
+    text-decoration: underline;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.footer-link:hover {
+    color: #fff;
+}
