@@ -108,24 +108,59 @@ body {
 
 .water-drop {
     position: absolute;
-    width: 60px;  /* increased from 40px */
-    height: 60px; /* increased from 40px */
-    background-color: #0099ff;
-    border-radius: 50%;
+    width: 44px;
+    height: 525px;
+    /* Reverse shape: round at both top and bottom, but more rounded at bottom */
+    background: radial-gradient(ellipse 60% 80% at 60% 90%, #7fd8ff 60%, #0099ff 100%);
+    /* Further soften and round the bottom edge */
+    border-radius: 99% 99% 90% 90% / 100% 100% 100% 100%;
+    clip-path: ellipse(50% 48% at 50% 50%);
     animation: dropFall linear forwards;
     transform-origin: center;
     cursor: pointer;
-    padding: 15px;  /* Add padding for larger click area */
-    margin: -15px;  /* Offset padding to maintain visual size */
-    transition: transform 0.1s ease;  /* Smooth hover effect */
+    /* Adjust hit box for new height */
+    padding: 131px 11px 131px 11px; /* 25% of new height (525px) = 131px */
+    margin: -131px -11px -131px -11px;
+    transition: transform 0.1s ease;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.10);
+    overflow: visible;
+}
+
+.water-drop::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 18px;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 38px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 100%);
+    border-radius: 60% 60% 100% 100% / 60% 60% 100% 100%;
+    pointer-events: none;
+    filter: blur(1px);
+    opacity: 0.7;
+}
+
+.water-drop::before {
+    content: '';
+    position: absolute;
+    left: 60%;
+    top: 30px;
+    width: 8px;
+    height: 8px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 50%;
+    filter: blur(0.5px);
+    opacity: 0.8;
 }
 
 .water-drop:hover {
-    transform: scale(1.1);  /* Slight grow effect on hover */
+    transform: scale(1.1);
 }
 
 .bad-drop {
-    background-color: #ff4444;
+    /* Reverse the gradient for bad drops as well */
+    background: radial-gradient(ellipse 60% 80% at 60% 90%, #e6e1a0 60%, #b5a642 100%);
 }
 
 .game-title {

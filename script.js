@@ -167,13 +167,32 @@ function startGame() {
 function createDrop(dropSpeed = 4) {
   // Create a new div element that will be our water drop
   const drop = document.createElement("div");
-  drop.className = "water-drop";
+
+  // Randomly decide if this is a bad drop (increase frequency: 1 in 3 chance)
+  const isBadDrop = Math.random() < 1/3;
+  if (isBadDrop) {
+    drop.className = "water-drop bad-drop";
+    // Set a brown-green-yellow color for bad drops
+    drop.style.backgroundColor = '#b5a642'; // olive yellow
+  } else {
+    drop.className = "water-drop";
+  }
 
   // Make drops different sizes for visual variety
   const initialSize = 60;
   const sizeMultiplier = Math.random() * 0.8 + 0.5;
   const size = initialSize * sizeMultiplier;
   drop.style.width = drop.style.height = `${size}px`;
+
+  // Assign points based on size (smaller = more points)
+  // Example: 3 points for smallest, 2 for medium, 1 for largest
+  let points = 1;
+  if (size < 45) {
+    points = 3;
+  } else if (size < 60) {
+    points = 2;
+  }
+  drop.dataset.points = points;
 
   // Position the drop randomly across the game width
   // Subtract 60 pixels to keep drops fully inside the container
@@ -187,24 +206,32 @@ function createDrop(dropSpeed = 4) {
   // Add the new drop to the game screen
   document.getElementById("game-container").appendChild(drop);
 
-  // Increase score when drop is clicked
+  // Increase or decrease score when drop is clicked
   drop.addEventListener("click", () => {
-    score++;
-    document.getElementById("score").textContent = score;
-    playSound(collectSound);
-    // Milestone check
-    for (const milestone of MILESTONES) {
-        if (score === milestone.score && !shownMilestones.has(milestone.score)) {
-            showMilestoneMessage(milestone.message);
-            shownMilestones.add(milestone.score);
-        }
+    if (isBadDrop) {
+      score -= 2;
+      if (score < 0) score = 0;
+      document.getElementById("score").textContent = score;
+      playSound(missSound);
+    } else {
+      const points = parseInt(drop.dataset.points, 10) || 1;
+      score += points;
+      document.getElementById("score").textContent = score;
+      playSound(collectSound);
+      // Milestone check
+      for (const milestone of MILESTONES) {
+          if (score === milestone.score && !shownMilestones.has(milestone.score)) {
+              showMilestoneMessage(milestone.message);
+              shownMilestones.add(milestone.score);
+          }
+      }
     }
     drop.remove(); // This removes the drop when clicked
   });
 
   // Remove drops that reach the bottom (weren't clicked)
   drop.addEventListener("animationend", () => {
-    playSound(missSound);
+    if (!isBadDrop) playSound(missSound);
     drop.remove(); // Clean up drops that weren't caught
   });
 }
