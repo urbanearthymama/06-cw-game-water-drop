@@ -19,6 +19,8 @@ const collectSound = new Audio('sounds/collect.mp3');
 const missSound = new Audio('sounds/miss.mp3');
 const buttonSound = new Audio('sounds/button.mp3');
 const winSound = new Audio('sounds/win.mp3');
+const horrorSound = new Audio('sounds/horror.mp3');
+const waterSlashSound = new Audio('sounds/water-slash.mp3');
 
 // Utility to play a sound from start
 function playSound(sound) {
@@ -171,7 +173,7 @@ function createDrop(dropSpeed = 4) {
   // Randomly decide if this is a bad drop (increase frequency: 1 in 3 chance)
   const isBadDrop = Math.random() < 1/3;
   if (isBadDrop) {
-    drop.className = "water-drop bad-drop";
+    drop.className = "water-drop bad-drop night-horror";
     // Set a brown-green-yellow color for bad drops
     drop.style.backgroundColor = '#b5a642'; // olive yellow
   } else {
@@ -206,19 +208,21 @@ function createDrop(dropSpeed = 4) {
   // Add the new drop to the game screen
   document.getElementById("game-container").appendChild(drop);
 
-  // Increase or decrease score when drop is clicked
-  drop.addEventListener("click", () => {
+  // Unified handler for click/touch
+  function handleDropCollect(e) {
+    e.preventDefault();
     if (isBadDrop) {
+      playSound(horrorSound);
       score -= 2;
       if (score < 0) score = 0;
       document.getElementById("score").textContent = score;
       playSound(missSound);
     } else {
+      playSound(waterSlashSound);
       const points = parseInt(drop.dataset.points, 10) || 1;
       score += points;
       document.getElementById("score").textContent = score;
       playSound(collectSound);
-      // Milestone check
       for (const milestone of MILESTONES) {
           if (score === milestone.score && !shownMilestones.has(milestone.score)) {
               showMilestoneMessage(milestone.message);
@@ -226,8 +230,12 @@ function createDrop(dropSpeed = 4) {
           }
       }
     }
-    drop.remove(); // This removes the drop when clicked
-  });
+    drop.remove();
+  }
+
+  // Click and touch support
+  drop.addEventListener("click", handleDropCollect);
+  drop.addEventListener("touchstart", handleDropCollect, {passive: false});
 
   // Remove drops that reach the bottom (weren't clicked)
   drop.addEventListener("animationend", () => {

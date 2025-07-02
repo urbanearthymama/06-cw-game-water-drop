@@ -33,6 +33,7 @@ body {
     background-color: #f0f0f0;
     font-family: 'Proxima Nova', 'Avenir', Arial, Helvetica, sans-serif, Georgia;
     padding-top: 120px; /* space for hero-section */
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 .game-wrapper {
@@ -40,6 +41,53 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    max-width: 420px;
+    width: 95vw;
+    margin: 0 auto;
+    padding: 1.5rem 0.5rem 2.5rem 0.5rem;
+    box-sizing: border-box;
+    background: #f7fafc;
+    border-radius: 18px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    min-height: 60vh;
+    position: relative;
+}
+
+@media (max-width: 600px) {
+    .game-wrapper {
+        max-width: 100vw;
+        min-height: 70vh;
+        padding: 0.5rem 0.1rem 1.5rem 0.1rem;
+        border-radius: 0;
+        box-shadow: none;
+    }
+    .hero-section {
+        padding: 0.5rem 0.2rem 0.5rem 0.2rem;
+    }
+    .game-title {
+        font-size: 2.1rem;
+    }
+    .game-tagline {
+        font-size: 1.1rem;
+    }
+    .score-panel {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.7rem;
+        width: 100%;
+    }
+    #start-btn, #restart-btn {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        margin-top: 0.2em;
+        margin-bottom: 0.2em;
+        min-width: unset;
+    }
+    .score, .timer, #difficulty {
+        width: 100%;
+        text-align: center;
+    }
 }
 
 .score-panel {
@@ -61,15 +109,25 @@ body {
 }
 
 #game-container {
-    width: 800px;
-    height: 600px;
-    background-color: #e6f7ff;
-    border: 2px solid #333;
-    border-radius: 8px;
+    width: 100%;
+    height: 420px;
+    max-width: 420px;
+    margin: 0 auto;
+    background: linear-gradient(to bottom, #e3f6fd 0%, #b3e0fc 100%);
+    border-radius: 16px;
     position: relative;
     overflow: hidden;
+    touch-action: manipulation;
 }
 
+@media (max-width: 600px) {
+    #game-container {
+        height: 60vw;
+        min-height: 260px;
+        max-width: 100vw;
+        border-radius: 0;
+    }
+}
 
 #start-btn {
     padding: 8px 16px;
@@ -79,6 +137,12 @@ body {
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    font-size: 1.2rem;
+    padding: 0.8em 1.5em;
+    border-radius: 8px;
+    margin: 0.2em 0.3em;
+    min-width: 110px;
+    touch-action: manipulation;
 }
 
 #start-btn:hover {
@@ -94,6 +158,12 @@ body {
     cursor: pointer;
     font-size: 16px;
     margin-left: 10px;
+    font-size: 1.2rem;
+    padding: 0.8em 1.5em;
+    border-radius: 8px;
+    margin: 0.2em 0.3em;
+    min-width: 110px;
+    touch-action: manipulation;
 }
 
 #restart-btn:hover {
@@ -124,6 +194,18 @@ body {
     transition: transform 0.1s ease;
     box-shadow: 0 8px 16px rgba(0,0,0,0.10);
     overflow: visible;
+    touch-action: manipulation;
+    min-width: 40px;
+    min-height: 40px;
+}
+
+@media (max-width: 600px) {
+    .water-drop {
+        min-width: 32px;
+        min-height: 32px;
+        max-width: 60px;
+        max-height: 60px;
+    }
 }
 
 .water-drop::after {
@@ -284,6 +366,9 @@ body {
     text-decoration: underline;
     font-weight: bold;
     transition: color 0.2s;
+    padding: 0.3em 0.7em;
+    font-size: 1.1rem;
+    display: inline-block;
 }
 
 .footer-link:hover {
